@@ -1,7 +1,7 @@
 ﻿open System.Collections.Generic
 open System
 
-let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToLower().ToCharArray();
+let alphabet = "abcdefghijklmnopqrstuvwxyzu".ToCharArray();
 
 let numberOfLettersInWord (word: string) letter =
     word 
@@ -18,7 +18,7 @@ let numberOfWordsWithletter (words: seq<string>) (letter: char) =
     |> Seq.filter (fun word -> word.Contains letter)
     |> Seq.length
 
-let letterCounts words = 
+let occurenceMap words = 
     alphabet
     |> Array.map (fun letter -> (letter, numberOfWordsWithletter words letter))
     |> Seq.sortBy (fun pair -> -1*(snd pair))
@@ -44,18 +44,27 @@ let filterWords (words: seq<string>) (state: string) (discarded: string) =
     |> Seq.filter(fun word -> characterFilter word state 3)
     |> Seq.filter(fun word -> characterFilter word state 4)
 
-let wordScore (letterCounts: IDictionary<char, int>) word = 
+let wordScore (occurenceMap: IDictionary<char, int>) word = 
     word
     |> Seq.distinct
-    |> Seq.map (fun character -> letterCounts[character])
+    |> Seq.map (fun character -> occurenceMap[character])
     |> Seq.sum
 
-let words = System.IO.File.ReadLines("./word-lists/words.txt")               
-let state = "A.O.d"
-let discarded = "ntskmhj"
-let filteredWords = filterWords words state discarded
+printfn "Welcome to Wassi, your Wordle-Assistant!"
+if Environment.GetCommandLineArgs().Length <> 3 then
+    printfn "Please check your input, it must be of the format: .\\wassi.exe <STATE> <DISCARDED>"
+    printfn "  - where <STATE> is you current information. Capital letters mean exact hits (green),"
+    printfn "    lower case letters hits at wrong positions (yellow)."
+    printfn "    To indicate nothing (gray), you can use any non-letter character."
+    printfn "  - and <DISCARDED> is a list of letters you have already ruled out."
+    exit -1
+               
+let state = Environment.GetCommandLineArgs()[1]
+let discarded = Environment.GetCommandLineArgs()[2]
+let words = System.IO.File.ReadLines("./word-lists/words.txt")
 
-let currentLetterCount = letterCounts filteredWords
+let filteredWords = filterWords words state discarded
+let currentLetterCount = occurenceMap filteredWords
 
 filteredWords
 |> Seq.map (fun word -> (word, wordScore currentLetterCount word))
