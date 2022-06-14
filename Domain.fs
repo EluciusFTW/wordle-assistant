@@ -2,7 +2,7 @@ module Domain
     open System
     open System.Collections.Generic
 
-    let alphabet = "abcdefghijklmnopqrstuvwxyzu".ToCharArray();
+    let alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
     let countWordsContainingLetter (words: seq<string>) (letter: char) =
         words
