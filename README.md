@@ -15,7 +15,7 @@ The suggest command will suggest words, ranked by their score, that fit your cur
 .\Wassi.exe suggest -p .A..s -e kltd -n 7
 ````
 The parameter
-* -p defines the progress. Has to be a five character string. Capital letters inidcate exact hits (green in wordle), lower-case letters occurrences in the word atr the wrong position (yellow in wordle). If this parameter is omitted, it is interpreted as the starting point.
+* -p defines the progress. Has to be a five character string. Capital letters inidcate exact hits (green in wordle), lower-case letters occurrences in the word at the wrong position (yellow in wordle). If this parameter is omitted, it is interpreted as the starting point.
 * -e provides the excluded letters as a gap-less string. If this parameter is omi
 * -w provides a path to a file containing the words to be used (default: "./word-lists/words.txt").  
 * -n indicates the number of results to be shown (default: 10).
@@ -23,9 +23,9 @@ The parameter
 ### Find
 The find command helps you find a word containing given letters, which can be helpful if you want to eliminate multiple ones but can't think of a word containing them.
 ```PS
-.\Wassi.exe find -c cko
+.\Wassi.exe find -i cko
 ````
-Here, the parameter -c provides the letters that should be included. Both -w for providing the word list as well as -n for the amount of results can be used with this command as well.
+Here, the parameter -i provides the letters that should be included. Both -w for providing the word list as well as -n for the amount of results can be used with this command as well.
 
 ### Sample
 Here is a small sample Wassi in action. It is based on the word list that can be [found here](https://github.com/tabatkins/wordle-list).
