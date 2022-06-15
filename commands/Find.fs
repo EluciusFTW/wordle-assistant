@@ -3,7 +3,8 @@ namespace Commands
 module Find =
     open Spectre.Console.Cli
     open System.ComponentModel
-    
+    open Output
+
     type FindWordSettings() =
         inherit CommandSettings()
 
@@ -16,17 +17,18 @@ module Find =
         member val numberOfResults = 10 with get, set
 
         [<CommandOption("-i|--including")>]
-        member val contains = "" with get, set
+        [<Description("The letters the words need to inlcude")>]
+        member val including = "" with get, set
     
     type FindWord() =
         inherit Command<FindWordSettings>()
         interface ICommandLimiter<FindWordSettings>
 
         override _.Execute(_context, settings) = 
-            let words = System.IO.File.ReadLines(settings.wordList) |> Seq.toArray
-            let filteredWords = Domain.wordsContaining settings.contains words
-
-            filteredWords 
-            |> Seq.truncate(settings.numberOfResults)
-            |> Seq.iter (fun word -> printfn "What about: %s" word)
+            match Load.getWords settings.wordList with
+            | Some words -> 
+                Domain.wordsContaining settings.including words 
+                |> Seq.truncate(settings.numberOfResults)
+                |> Seq.iter (fun word -> printMarkedUp $"What about: {emphasize word}?" )
+            | None -> warn "Error: Could not load word list." |> printMarkedUp
             0
