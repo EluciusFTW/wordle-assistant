@@ -8,7 +8,7 @@ let main argv =
     let app = CommandApp()
     app.Configure(fun config ->
         config.AddCommand<Suggest.SuggestWord>("suggest")
-            .WithAlias("a")
+            .WithAlias("s")
             .WithDescription("Shows words matching the current state and excluded letters, ranked by score.")
             |> ignore
 
