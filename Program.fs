@@ -14,7 +14,12 @@ let main argv =
 
         config.AddCommand<Find.FindWord>("find")
             .WithAlias("f")
-            .WithDescription("Shows words containing given letters")
+            .WithDescription("Shows words containing given letters.")
+            |> ignore
+
+        config.AddCommand<Score.Score>("score")
+            .WithAlias("s")
+            .WithDescription("Shows the score of a candidate word.")
             |> ignore)
 
     app.Run(argv)

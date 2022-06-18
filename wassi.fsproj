@@ -5,10 +5,11 @@
     <RootNamespace>Wassi</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="domain\Load.fs" />
+    <Compile Include="domain/Load.fs" />
     <Compile Include="domain/Domain.fs" />
-    <Compile Include="commands\Output.fs" />
+    <Compile Include="commands/Output.fs" />
     <Compile Include="commands/Find.fs" />
+    <Compile Include="commands/Score.fs" />
     <Compile Include="commands/Suggest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
