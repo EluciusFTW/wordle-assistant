@@ -16,7 +16,7 @@ The suggest command will suggest words, ranked by their score, that fit your cur
 ````
 The parameter
 * -p defines the progress. Has to be a five character string. Capital letters inidcate exact hits (green in wordle), lower-case letters occurrences in the word at the wrong position (yellow in wordle). If this parameter is omitted, it is interpreted as the starting point.
-* -e provides the excluded letters as a gap-less string. If this parameter is omi
+* -e provides the excluded letters as a gap-less string. If this parameter is omitted, no letters are excluded.
 * -w provides a path to a file containing the words to be used (default: "./word-lists/words.txt").  
 * -n indicates the number of results to be shown (default: 10).
 
