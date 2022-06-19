@@ -20,8 +20,12 @@ module Score =
         [<Description("The word you want to get the score of.")>]
         member val candidate = "" with get, set
 
+        [<CommandOption("-e|--excluding")>]
+        [<Description("The letters that have already been excluded")>]
+        member val excluded = "" with get, set
+
     let printScore words (settings: ScoreSettings) : unit =
-        let filteredWords = Domain.filterWords words settings.state ""
+        let filteredWords = Domain.filterWords words settings.state settings.excluded
 
         match (filteredWords |> Seq.exists (fun word -> word = settings.candidate)) with        
         | true ->
