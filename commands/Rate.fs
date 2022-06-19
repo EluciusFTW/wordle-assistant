@@ -1,11 +1,11 @@
 namespace Commands
 
-module Score =
+module Rate =
     open Spectre.Console.Cli
     open System.ComponentModel
     open Output
 
-    type ScoreSettings() =
+    type RateSettings() =
         inherit CommandSettings()
 
         [<CommandOption("-w|--wordlist")>]
@@ -24,7 +24,7 @@ module Score =
         [<Description("The letters that have already been excluded")>]
         member val excluded = "" with get, set
 
-    let printScore words (settings: ScoreSettings) : unit =
+    let printScore words (settings: RateSettings) : unit =
         let filteredWords = Domain.filterWords words settings.state settings.excluded
 
         match (filteredWords |> Seq.exists (fun word -> word = settings.candidate)) with        
@@ -39,9 +39,9 @@ module Score =
             printMarkedUp $"The word {emphasize settings.candidate} scored {emphasize (Domain.wordScore occurenceMap settings.candidate)} points, out of possible {emphasize max}."
         | false -> printMarkedUp $"The candidate {emphasize settings.candidate} is not part of the possible words."
 
-    type Score() =
-        inherit Command<ScoreSettings>()
-        interface ICommandLimiter<ScoreSettings>
+    type RateWord() =
+        inherit Command<RateSettings>()
+        interface ICommandLimiter<RateSettings>
 
         override _.Execute(_context, settings) =
             match settings.candidate.Length with

@@ -27,10 +27,10 @@ The find command helps you find a word containing given letters, which can be he
 ````
 Here, the parameter `(-i|--including)` provides the letters that should be included. Both `-w` for providing the word list as well as `-n` for the amount of results can be used with this command as well.
 
-### Score
-The score command will show you the score a given word has, under the current progress, taking into account excluded letters, thereby rating it.
+### Rate
+The rate command will show you the score a given word has, under the current progress, taking into account excluded letters, thereby rating it.
 ```PS
-.\Wassi.exe score -c joker -p J..r. -e afv
+.\Wassi.exe rate -c joker -p J..r. -e afv
 ````
 The word that is to be raten has to be provided via `(-c|--candidate)` and it has to be exactly 5 characters long. The _progress_ and the _excluded letters_ can be optionally provided it the same way as in the suggest command.
 

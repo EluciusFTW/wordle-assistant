@@ -1,5 +1,4 @@
-﻿open System
-open Spectre.Console.Cli
+﻿open Spectre.Console.Cli
 open Commands
 
 [<EntryPoint>]
@@ -17,9 +16,9 @@ let main argv =
             .WithDescription("Shows words containing given letters.")
             |> ignore
 
-        config.AddCommand<Score.Score>("score")
-            .WithAlias("s")
-            .WithDescription("Shows the score of a candidate word.")
+        config.AddCommand<Rate.RateWord>("rate")
+            .WithAlias("r")
+            .WithDescription("Shows the score of a candidate word, thereby rating it.")
             |> ignore)
 
     app.Run(argv)
