@@ -15,8 +15,8 @@ module Domain
         |> Seq.sortBy (fun pair -> -1*(snd pair))
         |> dict
 
-    let hasSuitableCharacterAt position (word: string) (state: string) = 
-        let character = state[position]
+    let hasSuitableCharacterAt position (word: string) (progress: string) = 
+        let character = progress[position]
         match character with
         | c when Char.IsLetter(c) && Char.IsUpper(c) -> word[position] = Char.ToLower(character)
         | c when Char.IsLetter(c) && Char.IsLower(c) -> word[position] <> character && word.Contains(character)
@@ -30,18 +30,18 @@ module Domain
             |> Seq.contains false
             |> not)
 
-    let filterWords (words: seq<string>) (state: string) (discarded: string) =
+    let filterWords (words: seq<string>) (progress: string) (discarded: string) =
         words
         |> Seq.filter (fun word -> 
             discarded 
             |> Seq.map(fun letter -> word.Contains(letter)) 
             |> Seq.contains true
             |> not)
-        |> Seq.filter(fun word -> hasSuitableCharacterAt 0 word state)
-        |> Seq.filter(fun word -> hasSuitableCharacterAt 1 word state)
-        |> Seq.filter(fun word -> hasSuitableCharacterAt 2 word state)
-        |> Seq.filter(fun word -> hasSuitableCharacterAt 3 word state)
-        |> Seq.filter(fun word -> hasSuitableCharacterAt 4 word state)
+        |> Seq.filter(fun word -> hasSuitableCharacterAt 0 word progress)
+        |> Seq.filter(fun word -> hasSuitableCharacterAt 1 word progress)
+        |> Seq.filter(fun word -> hasSuitableCharacterAt 2 word progress)
+        |> Seq.filter(fun word -> hasSuitableCharacterAt 3 word progress)
+        |> Seq.filter(fun word -> hasSuitableCharacterAt 4 word progress)
 
     let wordScore (occurenceMap: IDictionary<char, int>) word = 
         word

@@ -15,7 +15,7 @@ type ProgressSettings() =
 
     [<CommandOption("-p|--progress")>]
     [<Description("Your current progress. Capital letters denote matching positions (green), lower-case letters occurences in the word (yellow)")>]
-    member val state = "....." with get, set
+    member val progress = "....." with get, set
 
     [<CommandOption("-e|--excluding")>]
     [<Description("The letters that have already been excluded")>]

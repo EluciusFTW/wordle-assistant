@@ -13,7 +13,7 @@ module Suggest =
         member val numberOfResults = 10 with get, set
         
     let printSuggestions (settings: SuggestWordSettings) words = 
-        let filteredWords = Domain.filterWords words settings.state settings.excluded
+        let filteredWords = Domain.filterWords words settings.progress settings.excluded
         let occurenceMap = Domain.buildOccurenceMap filteredWords
         let results = 
             filteredWords 

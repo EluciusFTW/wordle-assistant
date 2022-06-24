@@ -13,7 +13,7 @@ module Rate =
         member val candidate = "" with get, set
 
     let printScore words (settings: RateSettings) : unit =
-        let filteredWords = Domain.filterWords words settings.state settings.excluded
+        let filteredWords = Domain.filterWords words settings.progress settings.excluded
 
         match (filteredWords |> Seq.exists (fun word -> word = settings.candidate)) with        
         | true ->
