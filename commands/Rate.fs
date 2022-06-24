@@ -6,23 +6,11 @@ module Rate =
     open Output
 
     type RateSettings() =
-        inherit CommandSettings()
-
-        [<CommandOption("-w|--wordlist")>]
-        [<Description("Path to the word list")>]
-        member val wordList = "./word-lists/words.txt" with get, set
-
-        [<CommandOption("-p|--progress")>]
-        [<Description("Your current progress. Capital letters denote matching positions (green), lower-case letters occurences in the word (yellow)")>]
-        member val state = "....." with get, set
-
+        inherit Setting.ProgressSettings()
+      
         [<CommandOption("-c|--candidate")>]
         [<Description("The word you want to get the score of.")>]
         member val candidate = "" with get, set
-
-        [<CommandOption("-e|--excluding")>]
-        [<Description("The letters that have already been excluded")>]
-        member val excluded = "" with get, set
 
     let printScore words (settings: RateSettings) : unit =
         let filteredWords = Domain.filterWords words settings.state settings.excluded

@@ -6,11 +6,7 @@ module Find =
     open Output
 
     type FindWordSettings() =
-        inherit CommandSettings()
-
-        [<CommandOption("-w|--wordlist")>]
-        [<Description("Path to the word list")>]
-        member val wordList = "./word-lists/words.txt" with get, set
+        inherit Setting.WordListSettings()
 
         [<CommandOption("-n")>]
         [<Description("Number of results to show")>]
