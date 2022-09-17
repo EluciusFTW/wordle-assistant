@@ -1,4 +1,4 @@
-module Setting
+namespace Wassi.Commands
 
 open Spectre.Console.Cli
 open System.ComponentModel
