@@ -3,6 +3,7 @@
 
 # Specific
 word-lists/
+.vscode/
 
 # User-specific files
 *.suo
