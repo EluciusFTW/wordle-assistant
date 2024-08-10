@@ -1,9 +1,10 @@
 namespace Wassi.Commands
 
 open Spectre.Console.Cli
+open SpectreCoff
 open System.ComponentModel
-open Wassi.Output
 open Wassi.Domain
+
 
 type FindWordSettings() =
     inherit WordListSettings()
@@ -16,15 +17,21 @@ type FindWordSettings() =
     [<Description("The letters the words need to inlcude")>]
     member val including = "" with get, set
 
+open Wassi.Load
+
 type FindWord() =
     inherit Command<FindWordSettings>()
     interface ICommandLimiter<FindWordSettings>
 
     override _.Execute(_context, settings) = 
-        match Wassi.Load.getWords settings.wordList with
+        match getWords settings.wordList with
         | Some words -> 
             wordsContaining settings.including words 
             |> Seq.truncate(settings.numberOfResults)
-            |> Seq.iter (fun word -> printMarkedUp $"What about: {emphasize word}?" )
-        | None -> warn "Error: Could not load word list." |> printMarkedUp
+            |> Seq.map (fun word -> [C "What about:"; P word; C "?"; NL ])
+            |> Seq.collect id
+            |> Seq.toList
+            |> Many
+        | None -> E "Error: Could not load word list." 
+        |> toConsole
         0
