@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Wassi</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="domain/Load.fs" />
     <Compile Include="domain/Domain.fs" />
     <Compile Include="commands/Setting.fs" />
-    <Compile Include="commands/Output.fs" />
     <Compile Include="commands/Rate.fs" />
     <Compile Include="commands/Find.fs" />
     <Compile Include="commands/Suggest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.44.0" />
+    <PackageReference Include="EluciusFTW.SpectreCoff" Version="0.49.2" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
   </ItemGroup>
 </Project>

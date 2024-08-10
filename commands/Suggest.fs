@@ -1,9 +1,9 @@
 namespace Wassi.Commands
 
 open Spectre.Console.Cli
+open SpectreCoff    
 open System.ComponentModel
 open Wassi.Domain
-open Wassi.Output    
 
 type SuggestWordSettings() =
     inherit ProgressSettings()
@@ -13,7 +13,7 @@ type SuggestWordSettings() =
     member val numberOfResults = 10 with get, set
 
 module Suggest = 
-    let printSuggestions (settings: SuggestWordSettings) words = 
+    let getSuggestionOutput (settings: SuggestWordSettings) words = 
         let filteredWords = filterWords words settings.progress settings.excluded
         let occurenceMap = buildOccurenceMap filteredWords
         let results = 
@@ -24,15 +24,22 @@ module Suggest =
             |> Seq.toList
 
         match results with
-        | [ ] -> warn "No words in the list match those criteria" |> printMarkedUp  
-        | pairs -> pairs |> List.iter (fun pair -> printMarkedUp $"The word {emphasize (fst pair)} scored {emphasize (snd pair)} points.")
+        | [ ] -> E "No words in the list match those criteria" 
+        | pairs -> 
+            pairs 
+            |> List.map (fun pair -> [ C "The word"; P (fst pair); C "scored"; P $"{snd pair}"; C "points."; NL])
+            |> List.collect id
+            |> Many
+
+open Wassi.Load
 
 type SuggestWord() =
     inherit Command<SuggestWordSettings>()
     interface ICommandLimiter<SuggestWordSettings>
 
     override _.Execute(_context, settings) = 
-        match Wassi.Load.getWords settings.wordList with
-        | Some words -> Suggest.printSuggestions settings words
-        | None ->  warn "Error: Could not load word list." |> printMarkedUp
+        match getWords settings.wordList with
+        | Some words -> Suggest.getSuggestionOutput settings words
+        | None ->  E "Error: Could not load word list." 
+        |> toConsole
         0

@@ -8,7 +8,7 @@ type WordListSettings() =
 
     [<CommandOption("-w|--wordlist")>]
     [<Description("Path to the word list")>]
-    member val wordList = "./word-lists/words.txt" with get, set
+    member val wordList = "../../../word-lists/words.txt" with get, set
 
 type ProgressSettings() =
     inherit WordListSettings()
